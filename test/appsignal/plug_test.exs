@@ -202,9 +202,12 @@ defmodule Appsignal.PlugTest do
       assert [%Appsignal.Transaction{}] = FakeTransaction.completed_transactions(fake_transaction)
     end
 
-    test "ignores the process' pid" do
-      :timer.sleep(1)
+    test "ignores the process' pid in the registry" do
       assert Appsignal.TransactionRegistry.lookup(self()) == :ignored
+    end
+
+    test "ignores the process' pid in the dictionary" do
+      assert Appsignal.TransactionDictionary.lookup() == :ignored
     end
   end
 

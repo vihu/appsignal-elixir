@@ -58,6 +58,7 @@ if Appsignal.plug?() do
            %Plug.Conn{private: %{appsignal_transaction: transaction}} = conn
          ) do
       Appsignal.ErrorHandler.handle_error(transaction, error, stack, conn)
+      Appsignal.TransactionDictionary.ignore()
       Appsignal.TransactionRegistry.ignore(self())
     end
 

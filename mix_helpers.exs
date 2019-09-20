@@ -507,12 +507,12 @@ defmodule Mix.Appsignal.Helper do
             result
 
           {:error, reason} ->
-            Mix.Shell.IO.error("Error: Could not write AppSignal report file '#{file}'.\n#{reason}")
+            Mix.Shell.IO.error("Error: Could not write AppSignal report file '#{file}'.\n#{inspect(reason)}")
             {:error, reason}
         end
 
       {:error, error} ->
-        Mix.Shell.IO.error("Error: Could not encode AppSignal report file '#{file}'.\n#{error}")
+        Mix.Shell.IO.error("Error: Could not encode AppSignal report file '#{file}'.\n#{inspect(error)}")
     end
   end
 
@@ -540,9 +540,9 @@ defmodule Mix.Appsignal.Helper do
   defp merge_report(report, %{}), do: report
 
   defp abort_installation(reason, report) do
-    report = merge_report(report, %{result: %{status: :failed, message: reason}})
+    report = merge_report(report, %{result: %{status: :failed, message: inspect(reason)}})
     write_report(report)
-    Mix.Shell.IO.error("AppSignal installation failed: #{reason}")
+    Mix.Shell.IO.error("AppSignal installation failed: #{inspect(reason)}")
   end
 
   defp priv_dir do
